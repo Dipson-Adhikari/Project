@@ -1,8 +1,9 @@
 import User from '../model/User.js';
 
+//signup function
 const signup = async (req, res) => {
     const { fullname, email, password, isAdmin } = req.body;
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
     if (user) return res.status(400).send({ error: "User already exists" });
     const newUser = new User({ fullname, email, password, isAdmin });
     await newUser.save();
@@ -14,4 +15,21 @@ const signup = async (req, res) => {
  });
 };
 
-export { signup };
+//Login function
+const login = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email});
+    if (!user) return res.status(400).send({ error: "User does not exist" });
+    if(await user.comparePassword(password)) {
+        res.send({ message: "Login successful", user: {
+            fullname: user.fullname,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        },
+     });
+    } else {
+        res.status(400).send({ error: "password invalid" });
+    }
+};
+
+export { signup, login };
