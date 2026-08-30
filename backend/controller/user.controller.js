@@ -39,4 +39,5 @@ const logout = (req, res) => {
     res.send({ message: "Logout successful" });
 }
 
+
 export { signup, login, logout };
