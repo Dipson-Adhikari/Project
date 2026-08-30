@@ -7,17 +7,17 @@ import {
     updateProduct,
     deleteProduct,
 } from "../controller/product.controller.js";
-import checkAuth from "../middleware/auth.js";
+import {checkAuth,checkAdmin} from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.get("/", getProducts);
 
-router.post("/", checkAuth, addProduct);
+router.post("/", checkAuth,checkAdmin, addProduct);
 
 router.get("/:id", getProductByID);
 
-router.put("/:id",checkAuth,updateProduct);
+router.put("/:id",checkAuth,checkAdmin,updateProduct);
 
 router.delete("/:id", deleteProduct);
 

@@ -16,5 +16,14 @@ const checkAuth = async (req, res, next) => {
     }
     console.log(token);
     next();
+
 }
-export default checkAuth;
+const checkAdmin = (req, res, next) => {
+    if(req.user.isAdmin) {
+        next();
+    }
+    else {
+        res.status(403).send({error: "you are not authorized to perform this action"});
+    }
+}
+export { checkAuth, checkAdmin };
