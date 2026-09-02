@@ -7,6 +7,7 @@ const checkAuth = async (req, res, next) => {
         const { _id } = jwt.verify(token, 'mySecretKey');
         const user = await User.findById(_id);
         req.user = {
+            _id: user._id,
             fullname: user.fullname,
             email: user.email,
             isAdmin: user.isAdmin,
