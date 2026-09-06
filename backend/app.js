@@ -5,11 +5,12 @@ import mongoose from "mongoose";
 import logger from "./middleware/logger.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./routes/order.route.js";
+import uploadRouter from "./routes/upload.route.js";
 
 const app = express();
 
 mongoose
-    .connect("mongodb://localhost:27017/himalayashop")
+    .connect(process.env.MONGODB_URL)
     .then((conn) => {
         console.log(`Connected to db at ${conn.connection.host}`);
     })
@@ -23,6 +24,7 @@ app.use(logger);
 app.use("/api/products", productRouter);
 app.use("/api/auth", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/upload", uploadRouter);
 app.listen(3000, () => {
     console.log("Server is up and running.");
 });

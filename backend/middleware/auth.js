@@ -4,7 +4,7 @@ const checkAuth = async (req, res, next) => {
     const token = req.cookies.jwt;
     if(!token) return res.status(401).send({error: "Access denied"});
     try {
-        const { _id } = jwt.verify(token, 'mySecretKey');
+        const { _id } = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const user = await User.findById(_id);
         req.user = {
             _id: user._id,
