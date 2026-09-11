@@ -1,6 +1,15 @@
-function App(){
+import Header from './components/Header.jsx';
+import Footer from './components/Footer.jsx';
+import HomePage from './pages/HomePage.jsx';
+function App() {
   return (
-    <h1>Hello React</h1>
-  )
+    <>
+      <Header/>
+      <HomePage/>
+      <hr/>
+      <Footer/>
+    </>
+  );
 }
+
 export default App;
