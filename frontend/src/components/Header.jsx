@@ -6,10 +6,10 @@ import { NavLink } from "react-router";
 
 function Header() {
   return (
-    <Navbar bg="info" variant="light" expand="lg" collapseOnSelect>
+    <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
       <Container>
         <Navbar.Brand as={NavLink} to="/">
-          <img src={logo} width="40" height="40" alt="Logo" />
+          
           Himalaya Shop
         </Navbar.Brand>
 

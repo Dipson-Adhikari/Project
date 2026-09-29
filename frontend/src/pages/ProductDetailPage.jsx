@@ -5,6 +5,7 @@ import {
   Col,
   ListGroup,
   Image,
+  Form,
 } from "react-bootstrap";
 import { useParams, Link } from "react-router";
 
@@ -12,6 +13,7 @@ function ProductDetailPage() {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+  const [qty, setQty] = useState(1);
 
   const fetchProduct = async () => {
     try {
@@ -35,57 +37,78 @@ function ProductDetailPage() {
       </Link>
 
       {product && (
-        
-<Row>
-  {/* Product Image */}
-  <Col md={6}>
-    <Image
-      src={product.image}
-      alt={product.name}
-      fluid
-    />
-  </Col>
+        <Row>
+          {/* Product Image */}
+          <Col md={6}>
+            <Image
+              src={product.image}
+              alt={product.name}
+              fluid
+            />
+          </Col>
 
-  {/* Product Information */}
-  <Col md={3}>
-    <ListGroup variant="flush">
-      <ListGroup.Item>
-        <h2>{product.name}</h2>
-      </ListGroup.Item>
+          {/* Product Information */}
+          <Col md={3}>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h2>{product.name}</h2>
+              </ListGroup.Item>
 
-      <ListGroup.Item>
-        Rating: {product.rating} ⭐
-      </ListGroup.Item>
+              <ListGroup.Item>
+                Rating: {product.rating} ⭐
+              </ListGroup.Item>
 
-      <ListGroup.Item>
-        {product.description}
-      </ListGroup.Item>
-    </ListGroup>
-  </Col>
+              <ListGroup.Item>
+                {product.description}
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
 
-  {/* Price / Cart */}
-  <Col md={3}>
-    <ListGroup variant="flush">
-      <ListGroup.Item>
-        Price: ${product.price}
-      </ListGroup.Item>
+          {/* Price / Cart */}
+          <Col md={3}>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                Price: ${product.price}
+              </ListGroup.Item>
 
-      <ListGroup.Item>
-        {product.countInStock > 0
-          ? "In Stock"
-          : "Out of Stock"}
-      </ListGroup.Item>
+              <ListGroup.Item>
+                {product.countInStock > 0
+                  ? "In Stock"
+                  : "Out of Stock"}
+              </ListGroup.Item>
 
-      <ListGroup.Item>
-        <button className="btn btn-primary">
-          Add to Cart
-        </button>
-      </ListGroup.Item>
-    </ListGroup>
-  </Col>
-</Row>
+              {product.countInStock !== 0 && (
+                <>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
 
+                      <Col>
+                        <Form.Select
+                        
+                        >
+                          {[...Array(product.countInStock).keys()].map(
+                            (x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            )
+                          )}
+                        </Form.Select>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
 
+                  <ListGroup.Item>
+                    <button className="btn btn-dark">
+                      Add to Cart
+                    </button>
+                  </ListGroup.Item>
+                </>
+              )}
+            </ListGroup>
+          </Col>
+        </Row>
       )}
     </>
   );
